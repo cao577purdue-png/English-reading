@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="根据课文照片整理的大学英语阅读练习：阅读原文，完成六道选择题，提交后查看中文解析与原文依据。">
+  <title>Planting seeds, harvesting the future · 英语阅读练习</title>
+  <style>
+    :root { --paper:#f5f4ef; --white:#fffefa; --ink:#24352f; --muted:#65716b; --green:#25634f; --light-green:#edf4ee; --line:#dedfd6; --red:#a33333; --light-red:#fff0ed; --gold:#8c6426; --radius:18px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:95px; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; line-height:1.65; }
+    button,input { font:inherit; }
+    button,a,input { -webkit-tap-highlight-color:transparent; }
+    button,a { touch-action:manipulation; }
+    button { cursor:pointer; }
+    a { color:var(--green); text-underline-offset:4px; }
+    :focus-visible { outline:3px solid #bd8b34; outline-offset:4px; }
+    [hidden] { display:none !important; }
+    .skip-link { position:fixed; top:-80px; left:16px; padding:12px 18px; background:white; z-index:20; }
+    .skip-link:focus { top:12px; }
+    .site-header { position:sticky; top:0; z-index:10; border-bottom:1px solid var(--line); background:rgba(245,244,239,.97); }
+    .header-inner { max-width:1400px; margin:auto; padding:15px 36px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:700; letter-spacing:.04em; font-size:16px; }
+    .brand-icon { display:grid; place-items:center; width:34px; height:34px; border-radius:9px; background:var(--green); color:white; }
+    .brand small { color:var(--muted); font-size:11px; font-weight:500; letter-spacing:.11em; margin-left:10px; }
+    .top-nav { display:flex; gap:8px; }
+    .top-nav a { text-decoration:none; border-radius:7px; padding:7px 14px; font-size:14px; font-weight:600; }
+    .top-nav a:last-child { color:white; background:var(--green); }
+    main { max-width:1400px; margin:auto; padding:0 36px 54px; }
+    .hero { padding:48px 0 34px; display:flex; justify-content:space-between; gap:36px; align-items:flex-end; }
+    .eyebrow { margin:0 0 16px; font-size:11px; font-weight:700; letter-spacing:.18em; color:var(--green); }
+    h1 { margin:0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(32px,3.7vw,53px); line-height:1.12; font-weight:500; letter-spacing:-.035em; }
+    h1 span { display:block; }
+    .hero-description { color:var(--muted); font-size:14px; margin:18px 0 0; }
+    .hero-meta { text-align:right; flex-shrink:0; padding-bottom:3px; }
+    .hero-meta strong { font-family:Georgia,serif; font-size:35px; font-weight:400; line-height:1; }
+    .hero-meta span { display:block; font-size:12px; color:var(--muted); margin-top:7px; }
+    .source-note { display:flex; gap:13px; align-items:flex-start; padding:16px 20px; background:#efeee5; border:1px solid #e3e0d0; border-radius:12px; font-size:12px; color:#65614f; margin-bottom:28px; }
+    .source-note svg { flex-shrink:0; margin-top:3px; }
+    .source-note p { margin:0; }
+    .source-note strong { color:#575342; }
+    .workspace { display:grid; grid-template-columns:minmax(0,1.22fr) minmax(0,1fr); gap:28px; align-items:start; }
+    .reading,.exercise { background:var(--white); border:1px solid var(--line); border-radius:var(--radius); }
+    .panel-heading { padding:24px 30px 20px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; align-items:center; }
+    h2 { font-size:19px; margin:0; letter-spacing:.01em; }
+    .section-label { display:block; font-size:10px; color:var(--muted); letter-spacing:.13em; font-weight:600; margin-bottom:3px; }
+    .tag { font-size:11px; color:var(--green); background:var(--light-green); padding:5px 10px; border-radius:20px; white-space:nowrap; }
+    .page-navigation { display:flex; gap:10px; padding:14px 30px; border-bottom:1px solid var(--line); align-items:center; }
+    .page-navigation span { font-size:12px; color:var(--muted); margin-right:2px; }
+    .page-navigation a { font-size:12px; text-decoration:none; padding:3px 10px; border:1px solid var(--line); border-radius:5px; }
+    .page-navigation a:hover { border-color:var(--green); background:var(--light-green); }
+    .article-body { padding:0 36px 30px; }
+    .source-page { padding-top:27px; }
+    .source-page + .source-page { border-top:1px solid var(--line); margin-top:28px; }
+    .page-title { margin:0 0 22px; display:flex; gap:10px; align-items:center; color:var(--muted); font-weight:500; font-size:11px; letter-spacing:.1em; font-family:inherit; }
+    .page-title::after { content:""; height:1px; background:var(--line); flex:1; }
+    .passage { font-family:Georgia,"Times New Roman",serif; font-size:18px; line-height:1.9; color:#303b35; overflow-wrap:break-word; }
+    .passage p { margin:0 0 23px; position:relative; }
+    .paragraph-number { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:#8b966f; font-size:11px; display:block; width:23px; position:absolute; left:-25px; top:4px; font-weight:600; user-select:none; }
+    .continuation { display:block; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:11px; color:var(--muted); letter-spacing:0; margin:-12px 0 10px; }
+    .source-caption { padding:12px 15px; margin:4px 0 24px; background:#f3f3ec; border-left:2px solid #c9d0b8; font-family:inherit; font-size:13px; line-height:1.7; color:var(--muted); }
+    .source-caption span { display:block; margin-bottom:4px; font-size:10px; letter-spacing:.06em; }
+    .notes { background:#f3f3ec; border-radius:10px; padding:20px; margin-top:28px; }
+    .notes h4 { margin:0 0 12px; font-size:13px; letter-spacing:.08em; color:var(--green); }
+    .notes p { font-size:15px; line-height:1.8; margin-bottom:14px; }
+    .notes p:last-child { margin-bottom:0; }
+    .exercise { position:sticky; top:88px; max-height:calc(100dvh - 108px); overflow-y:auto; scrollbar-width:thin; scrollbar-color:#c5ccc1 transparent; }
+    .exercise .panel-heading { padding:24px 25px 20px; }
+    .quiz-intro { padding:18px 25px 0; color:var(--muted); font-size:12px; }
+    .quiz-intro p { margin:0 0 14px; }
+    .progress-header { display:flex; justify-content:space-between; align-items:center; font-size:12px; }
+    #progress-label { font-weight:600; color:var(--ink); }
+    .progress-track { height:4px; background:#e9ece3; border-radius:5px; margin:9px 0 15px; overflow:hidden; }
+    .progress-fill { height:100%; width:0; background:var(--green); transition:width .2s ease; }
+    .question-nav { display:flex; gap:8px; margin-bottom:18px; }
+    .question-nav a { width:31px; height:31px; border-radius:50%; border:1px solid var(--line); font-size:11px; text-decoration:none; display:grid; place-items:center; background:white; color:var(--muted); }
+    .question-nav a.answered { background:var(--green); color:white; border-color:var(--green); }
+    .question-nav a.nav-wrong { background:var(--red); border-color:var(--red); }
+    #questions { padding:0 25px; }
+    .question { border:0; border-top:1px solid var(--line); padding:22px 0 24px; margin:0; min-width:0; scroll-margin-top:22px; }
+    .question legend { float:left; width:100%; padding:0; margin:0 0 14px; }
+    .question legend + * { clear:both; }
+    .question-meta { display:flex; align-items:center; gap:9px; margin-bottom:9px; font-size:11px; color:var(--muted); }
+    .question-number { font-weight:700; font-size:12px; color:var(--green); }
+    .question-kind { padding:1px 7px; border-radius:4px; background:#f0f1eb; }
+    .question-text { display:block; font-size:15px; line-height:1.7; font-weight:600; }
+    .option-list { clear:both; display:grid; gap:8px; }
+    .option { display:flex; gap:10px; align-items:flex-start; padding:12px; border:1px solid var(--line); border-radius:9px; background:white; cursor:pointer; font-size:14px; line-height:1.65; }
+    .option:hover { border-color:#8dada0; background:#fafbf7; }
+    .option:has(input:checked) { border-color:var(--green); background:var(--light-green); box-shadow:0 0 0 1px var(--green); }
+    .option input { accent-color:var(--green); flex:0 0 auto; width:17px; height:17px; margin:3px 0 0; }
+    .option-letter { font-size:12px; font-weight:700; color:var(--muted); margin-right:5px; }
+    .option-content { flex:1; min-width:0; }
+    .answer-badge { display:block; margin-top:5px; font-size:11px; font-weight:600; }
+    .option.correct-option { background:var(--light-green); border-color:var(--green); box-shadow:none; }
+    .option.wrong-option { background:var(--light-red); border-color:var(--red); box-shadow:none; }
+    .option.correct-option .answer-badge { color:var(--green); }
+    .option.wrong-option .answer-badge { color:var(--red); }
+    .question.needs-answer { border-top-color:#d58c56; }
+    .question.needs-answer .question-number::after { content:" · 请补答"; color:var(--red); }
+    .question-error { clear:both; color:var(--red); font-size:13px; font-weight:600; margin:0 0 12px; }
+    .feedback { border-radius:10px; background:#f4f5ee; margin-top:16px; padding:16px; font-size:13px; line-height:1.8; }
+    .feedback h3 { font-size:13px; margin:0 0 9px; color:var(--green); }
+    .feedback h3.incorrect { color:var(--red); }
+    .feedback p { margin:7px 0; }
+    .feedback blockquote { margin:10px 0; border-left:2px solid #a5bba2; padding-left:11px; color:#52614f; font-family:Georgia,"Times New Roman",serif; font-size:15px; }
+    .feedback a { font-size:12px; }
+    .error-summary { background:var(--light-red); color:var(--red); border:1px solid #edc4b5; border-radius:9px; padding:12px 14px; font-size:13px; margin:0 25px 18px; }
+    .results { padding:20px; margin:0 25px 20px; border:1px solid #bccfba; background:var(--light-green); border-radius:12px; }
+    .results h3 { margin:0; font-size:12px; font-weight:500; color:var(--green); }
+    .score { font-size:40px; letter-spacing:-.04em; line-height:1.4; font-weight:700; color:var(--green); }
+    .score span { font-size:20px; color:#78917b; font-weight:400; }
+    .results p { font-size:13px; margin:5px 0 0; }
+    .quiz-actions { position:sticky; bottom:0; z-index:2; padding:17px 25px; background:var(--white); border-top:1px solid var(--line); box-shadow:0 -6px 16px rgba(36,53,47,.025); }
+    .quiz-actions .error-summary { margin:0 0 12px; font-weight:600; }
+    .error-summary a { display:inline-block; color:var(--red); margin-left:6px; }
+    .submission-status { margin:0 0 12px; padding:11px 13px; border-radius:8px; font-size:13px; line-height:1.7; color:var(--green); background:var(--light-green); border:1px solid #b7cdbd; }
+    .submission-status[data-state="success"] { font-weight:600; }
+    .submission-status a { display:inline-block; margin-left:6px; }
+    .runtime-notice { color:var(--gold); padding:10px 12px; background:#fff4d9; border:1px solid #e7d3a6; border-radius:8px; }
+    .button-row { display:flex; gap:10px; }
+    .button { min-height:46px; padding:10px 16px; border-radius:8px; border:1px solid var(--green); font-size:14px; font-weight:600; }
+    .button-primary { background:var(--green); color:white; flex:1; }
+    .button-primary:hover { background:#1d4f3f; }
+    .button-primary:disabled { background:#ecf0e8; color:#657661; border-color:#d4dacf; cursor:default; }
+    .button-secondary { background:transparent; color:var(--green); }
+    .privacy { display:flex; align-items:center; justify-content:center; gap:5px; color:var(--muted); font-size:10px; margin:10px 0 0; }
+    .site-footer { margin-top:28px; display:flex; gap:10px; justify-content:space-between; color:var(--muted); font-size:11px; }
+    .site-footer p { margin:0; }
+    .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .passage p:target { background:#f5edcc; outline:8px solid #f5edcc; border-radius:3px; }
+    @media (min-width:1500px) { .exercise { max-height:calc(100dvh - 118px); } }
+    @media (max-width:1000px) {
+      .header-inner { padding:13px 22px; }
+      main { padding:0 22px 35px; }
+      .workspace { gap:18px; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); }
+      .article-body { padding:0 28px 25px; }
+      .panel-heading { padding:22px 24px 18px; }
+      .exercise .panel-heading { padding:22px 19px 18px; }
+      .quiz-intro { padding:16px 19px 0; }
+      #questions { padding:0 19px; }
+      .quiz-actions { padding:15px 19px; }
+      .error-summary,.results { margin-left:19px; margin-right:19px; }
+      .passage { font-size:17px; }
+      .brand small { display:none; }
+    }
+    @media (max-width:760px) {
+      html { scroll-padding-top:83px; }
+      .header-inner { padding:12px 18px; gap:12px; }
+      .brand { font-size:14px; gap:8px; }
+      .brand-icon { width:30px; height:30px; }
+      .top-nav { gap:3px; }
+      .top-nav a { padding:7px 10px; font-size:12px; }
+      main { padding:0 16px 30px; }
+      .hero { padding:32px 2px 25px; gap:15px; }
+      h1 { font-size:clamp(29px,6.6vw,43px); }
+      .hero-description { font-size:12px; line-height:1.8; margin-top:14px; }
+      .eyebrow { font-size:9px; letter-spacing:.13em; margin-bottom:12px; }
+      .hero-meta { display:none; }
+      .source-note { margin-bottom:20px; padding:13px 14px; font-size:11px; gap:9px; }
+      .workspace { display:block; }
+      .reading,.exercise { border-radius:13px; }
+      .exercise { margin-top:24px; position:static; max-height:none; overflow:visible; }
+      .panel-heading,.exercise .panel-heading { padding:21px 21px 17px; }
+      .page-navigation { padding:13px 21px; }
+      .article-body { padding:0 25px 25px 32px; }
+      .paragraph-number { left:-20px; width:17px; }
+      .passage { font-size:18px; line-height:1.9; }
+      .page-title { font-size:10px; }
+      .source-caption { font-size:13px; }
+      .notes { padding:17px; margin-left:-10px; }
+      .quiz-intro { padding:18px 20px 0; }
+      #questions { padding:0 20px; }
+      .question { scroll-margin-top:90px; padding-top:23px; }
+      .question-text { font-size:16px; }
+      .option { font-size:15px; padding:13px 12px; }
+      .option input { width:19px; height:19px; }
+      .quiz-actions { position:sticky; padding:14px 20px; padding-bottom:calc(14px + env(safe-area-inset-bottom)); border-radius:0 0 13px 13px; }
+      .question-nav a { width:35px; height:35px; }
+      .site-footer { flex-direction:column; gap:4px; padding:0 3px; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .progress-fill { transition:none; } }
+    @media print {
+      .site-header,.top-nav,.source-note,.hero-meta,.quiz-actions,.page-navigation,.question-nav,.site-footer { display:none; }
+      body { background:white; color:black; }
+      main { padding:0; }
+      .hero { padding:0 0 20px; }
+      .workspace { display:block; }
+      .reading,.exercise { position:static; max-height:none; overflow:visible; border:0; }
+      .exercise { break-before:page; }
+      .question { break-inside:avoid; }
+      .passage { font-size:12pt; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#reading">跳到阅读原文</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand"><span class="brand-icon" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1m0-15c3-2 6-2 9-1v15c-3-1-6-1-9 1V5Z"/></svg></span>英语阅读课堂 <small>READ &amp; REFLECT</small></div>
+      <nav class="top-nav" aria-label="主要导航"><a href="#reading">阅读原文</a><a href="#practice">开始答题 <span aria-hidden="true">↗</span></a></nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="page-heading">
+      <div>
+        <p class="eyebrow">UNIT 02 &nbsp; / &nbsp; UNDERSTANDING CHINA</p>
+        <h1 id="page-heading" lang="en">Planting seeds,<span>harvesting the future</span></h1>
+        <p class="hero-description">从大学生的创造力，读懂创新的力量。<br>大学一年级 · 阅读理解 · 提交后查看中文解析与原文依据</p>
+      </div>
+      <div class="hero-meta"><strong>03 <span style="display:inline;font-size:18px">/</span> 06</strong><span>3 页课文 &nbsp; · &nbsp; 6 道单选题</span></div>
+    </section>
+    <aside class="source-note" aria-label="照片识别与标题说明">
+      <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>
+      <p><strong>照片核对说明</strong> · 两张照片覆盖第32–34页，已按页码整理全部可见正文（第1–10段）、图片说明及 Notes；第5段跨页续接。照片未显示独立文章标题，本页英文阅读标题取自第33页页脚，保留页眉“Understanding China”。放大核对后正文均可辨认，未补写照片外内容。</p>
+    </aside>
+    <div class="workspace">
+      <article class="reading" id="reading" aria-labelledby="reading-heading">
+        <div class="panel-heading"><h2 id="reading-heading"><span class="section-label">01 / THE PASSAGE</span>阅读原文</h2><span class="tag">保留原文段落</span></div>
+        <nav class="page-navigation" aria-label="原文页码"><span>跳转页码</span><a href="#page32">32</a><a href="#page33">33</a><a href="#page34">34</a></nav>
+        <div class="article-body passage" lang="en">
+          <section class="source-page" id="page32" aria-labelledby="page32-title">
+            <h3 class="page-title" id="page32-title"><span lang="zh-CN">第 32 页</span> / PAGE 32</h3>
+            <p id="p1"><span class="paragraph-number" aria-label="Paragraph 1">01</span>Tsinghua University has recently intensified its focus on enhancing its innovation and entrepreneurship education. Since its launch in 2013, the Tsinghua x-lab, a platform designed for students to imagine, innovate, and implement new ideas, has supported over 2,600 projects across various industries. According to the x-lab’s executive director, the platform aims to give the entire Tsinghua community a supportive environment for exploring entrepreneurship, taking risks, and seeking innovative solutions.</p>
+            <p id="p2"><span class="paragraph-number" aria-label="Paragraph 2">02</span>Likewise, Zhejiang University in Hangzhou, one of China’s most innovative and entrepreneurship-friendly cities, is dedicated to fostering creativity and problem-solving skills among its students. The “Innovation and Entrepreneurship Education” program, launched in 2017, blends theoretical knowledge with practical application.</p>
+            <aside class="source-caption"><span lang="zh-CN">照片中配图说明 · 第32页</span>Students debugging robots at the Innovation Practice Base of Robotics and Intelligent Equipment of Zhejiang University</aside>
+            <p id="p3"><span class="paragraph-number" aria-label="Paragraph 3">03</span>The University of Science and Technology of China also promotes creativity through various programs and competitions that encourage students to develop and commercialize their ideas. Interdisciplinary research centers have been set up to give students and faculty alike the chance to tackle complex problems with creative solutions.</p>
+            <p id="p4"><span class="paragraph-number" aria-label="Paragraph 4">04</span>These examples highlight the fact that Chinese higher education institutions have heavily invested in fostering creativity and innovation in education. Since creativity is the lifeblood of any innovation or invention, cultivating creativity among college students has become a national priority in light of China’s rapid economic growth and technological advancement.</p>
+            <p id="p5"><span class="paragraph-number" aria-label="Paragraph 5, continued on page 33">05</span>In fact, the Chinese government has rolled out policies, programs, and activities to foster a creative environment. In 2015, the General Office of the State Council issued a guideline to improve innovation and entrepreneurship courses at universities.</p>
+          </section>
+          <section class="source-page" id="page33" aria-labelledby="page33-title">
+            <h3 class="page-title" id="page33-title"><span lang="zh-CN">第 33 页</span> / PAGE 33</h3>
+            <span class="continuation" lang="zh-CN">接第32页第5段</span>
+            <p id="p5-cont"><span class="paragraph-number" aria-label="Paragraph 5, continuation">05</span>The guideline urged universities to support student entrepreneurship by transferring credits and setting up flexible learning schedules. Another notable example is the Ministry of Education’s Double First-Class Initiative, launched in 2017, which aims to build world-class universities and disciplines. This policy encourages institutions to promote interdisciplinary programs, weave practical projects into their curricula, and cultivate a research-oriented culture. Additionally, the government has increased funding for research and development projects, providing students with the necessary resources to explore and innovate.</p>
+            <p id="p6"><span class="paragraph-number" aria-label="Paragraph 6">06</span>The Challenge Cup National College Student Extracurricular Academic and Technological Works Competition, which began in 1989, aims to encourage scientific and technological innovation among students, promote their research and development skills, enhance their practical abilities and innovative spirit, and foster an environment of academic excellence and knowledge exchange. The 18th Challenge Cup, held at Guizhou University in 2023, saw unprecedented participation, with entries from over 2,000 universities, more than 400,000 projects, and the involvement of 2.5 million students. Many winning projects have achieved commercial success or made significant impacts across various fields, ranging from technology and engineering to social sciences and environmental protection.</p>
+            <p id="p7"><span class="paragraph-number" aria-label="Paragraph 7">07</span>The idea behind these policies and initiatives is to encourage Chinese students to think outside the box and address significant real-world challenges. The emphasis on developing creativity among Chinese college students has paid off. Students have excelled in national and international competitions, showcasing their innovative projects and research. For instance, the Shanghai Jiao Tong University VEX team holds an impressive record at the VEX Robotics World Championship, recognized by Guinness World Records as the largest robotics competition globally. Since its debut in 2019, the team has swept the board in the VEX U category for college and university students.</p>
+          </section>
+          <section class="source-page" id="page34" aria-labelledby="page34-title">
+            <h3 class="page-title" id="page34-title"><span lang="zh-CN">第 34 页</span> / PAGE 34</h3>
+            <p id="p8"><span class="paragraph-number" aria-label="Paragraph 8">08</span>The quality of research output from Chinese universities has also improved. Students from the Harbin Institute of Technology, Northwestern Polytechnical University, and Nanjing University of Science and Technology have been involved in developing small satellites and space exploration technologies. Their CubeSats have been launched into space, contributing to China’s space missions and earning international acclaim.</p>
+            <aside class="source-caption"><span lang="zh-CN">照片中配图说明 · 第34页</span>Students from Shanghai Jiao Tong University demonstrating a self-developed guide robot at the World Robot Conference</aside>
+            <p id="p9"><span class="paragraph-number" aria-label="Paragraph 9">09</span>While substantial progress has been made, there is always room for improvement. To further enhance creativity among college students, it is essential to expand interdisciplinary programs, encourage partnerships between universities and industries, and increase investment in emerging fields such as artificial intelligence and biotechnology. A more flexible and open education system is also needed to encourage risk-taking and embrace failure. International exchange programs and partnerships with foreign universities can provide students with diverse perspectives and experiences, further enriching their creative abilities.</p>
+            <p id="p10"><span class="paragraph-number" aria-label="Paragraph 10">10</span>Developing creativity among Chinese college students is a multifaceted endeavor that requires ongoing commitment and collaboration. Through supportive policies, innovative teaching methods, stimulating activities, and recognition of achievements, China is well on its way to nurturing a generation of creators and innovators who will drive the nation’s future growth and prosperity.</p>
+            <aside class="notes" aria-labelledby="notes-heading">
+              <h4 id="notes-heading">Notes</h4>
+              <p><strong>The VEX Robotics World Championship</strong>, often referred to as the “Olympics” of robotics competitions, is the largest and most widely attended robotics competition in the world, representing the highest international standard for educational robotics competitions.</p>
+              <p><strong>CubeSats</strong> are a class of nanosatellites with a standardized size and form factor. In a CubeSat project, students are required to design and build their own small satellites to engage in a real space mission.</p>
+            </aside>
+          </section>
+        </div>
+      </article>
+      <section class="exercise" id="practice" aria-labelledby="practice-heading">
+        <div class="panel-heading"><h2 id="practice-heading" tabindex="-1"><span class="section-label">02 / CHECK YOUR UNDERSTANDING</span>阅读练习</h2><span class="tag">6 题 · 每题1分</span></div>
+        <div class="quiz-intro">
+          <p>阅读文章，为每题选择一个最佳答案。全部作答后提交，即可查看得分、中文解析及原文依据。</p>
+          <p class="runtime-notice" id="runtime-notice" role="status">答题功能正在加载。如果此提示一直显示，请下载本页并用浏览器打开；静态文件预览可能不支持 JavaScript。</p>
+          <div class="progress-header"><span>作答进度</span><span id="progress-label" aria-live="polite">已答 0 / 6 题</span></div>
+          <div class="progress-track" role="progressbar" aria-label="作答进度" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="progress-fill"></div></div>
+          <nav class="question-nav" id="question-nav" aria-label="题目导航"></nav>
+        </div>
+        <div class="results" id="results" tabindex="-1" aria-labelledby="results-heading" hidden></div>
+        <form id="quiz-form" novalidate>
+          <div id="questions"></div>
+          <div class="quiz-actions">
+            <div class="error-summary" id="error-summary" role="alert" hidden></div>
+            <div class="submission-status" id="submission-status" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+            <div class="button-row"><button class="button button-primary" id="submit-button" type="submit" disabled>提交答案 <span aria-hidden="true">→</span></button><button class="button button-secondary" id="reset-button" type="button" disabled>重新练习</button></div>
+            <p class="privacy"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>无需姓名 · 成绩仅在当前页面显示，不上传、不保存</p>
+          </div>
+        </form>
+        <noscript><p style="padding:20px">请开启浏览器的 JavaScript 功能以使用答题与评分。原文仍可正常阅读。</p></noscript>
+      </section>
+    </div>
+    <footer class="site-footer"><p>以原文为依据，在阅读中形成自己的判断。</p><p>课堂阅读练习 · 可离线使用</p></footer>
+  </main>
+  <script>
+    'use strict';
+    const questions = [
+      {
+        type: '主旨大意',
+        text: 'What is the passage mainly about?',
+        options: [
+          'How university students design and launch small satellites.',
+          'How China fosters college students’ creativity, its achievements, and areas for improvement.',
+          'Why robotics competitions should replace university courses.',
+          'How Chinese universities are ranked against foreign universities.'
+        ],
+        answer: 1,
+        explanation: '文章先介绍高校的创新教育实践，再介绍政策、竞赛与科研成果，最后提出改进方向。B概括了“培养方式—成果—进一步改进”的全文结构。A只涉及第8段的例子；C的“取代课程”和D的“大学排名”均不是文章讨论的内容。',
+        evidence: [
+          { ref: 'p4', label: '第32页 · 第4段', quote: 'Chinese higher education institutions have heavily invested in fostering creativity and innovation in education.' },
+          { ref: 'p9', label: '第34页 · 第9段', quote: 'While substantial progress has been made, there is always room for improvement.' }
+        ]
+      },
+      {
+        type: '事实细节',
+        text: 'What is a feature of Zhejiang University’s “Innovation and Entrepreneurship Education” program?',
+        options: [
+          'It combines theoretical knowledge with practical application.',
+          'It awards students for starting businesses overseas.',
+          'It replaces classroom learning with competitions.',
+          'It focuses exclusively on space technology.'
+        ],
+        answer: 0,
+        explanation: '第2段明确说该项目“blends theoretical knowledge with practical application”，即把理论知识与实践应用相结合，因此选A。B的海外创业奖励、C的取代课堂学习和D的仅研究空间技术，均没有原文支持。',
+        evidence: [{ ref: 'p2', label: '第32页 · 第2段', quote: 'The “Innovation and Entrepreneurship Education” program, launched in 2017, blends theoretical knowledge with practical application.' }]
+      },
+      {
+        type: '事实细节',
+        text: 'Which statement about the 18th Challenge Cup is supported by the passage?',
+        options: [
+          'It marked the beginning of the Challenge Cup in 2023.',
+          'It was open only to students studying engineering.',
+          'It received exactly 400,000 project entries.',
+          'It involved 2.5 million students and entries from over 2,000 universities.'
+        ],
+        answer: 3,
+        explanation: '第6段给出第18届“挑战杯”的参与规模：超过2,000所高校、超过400,000个项目和250万名学生，D与原文一致。“挑战杯”始于1989年，而非2023年；获奖项目横跨多个领域；“more than”也不能理解为“恰好”。',
+        evidence: [{ ref: 'p6', label: '第33页 · 第6段', quote: 'The 18th Challenge Cup, held at Guizhou University in 2023, saw unprecedented participation, with entries from over 2,000 universities, more than 400,000 projects, and the involvement of 2.5 million students.' }]
+      },
+      {
+        type: '推理判断',
+        text: 'What can be inferred about the role of practical projects in creativity education?',
+        options: [
+          'They are useful only for students who plan to start businesses.',
+          'They should be introduced only after students graduate.',
+          'They help students apply ideas to real-world problems.',
+          'They make interdisciplinary study unnecessary.'
+        ],
+        answer: 2,
+        explanation: '第3段把开发、商业化创意与解决复杂问题联系起来，第7段又指出相关举措旨在鼓励学生解决现实挑战。因此可推断，实践项目有助于把想法用于实际问题，选C。原文没有A、B的限制，也没有说实践能够替代跨学科学习。',
+        evidence: [
+          { ref: 'p3', label: '第32页 · 第3段', quote: 'Interdisciplinary research centers have been set up to give students and faculty alike the chance to tackle complex problems with creative solutions.' },
+          { ref: 'p7', label: '第33页 · 第7段', quote: 'The idea behind these policies and initiatives is to encourage Chinese students to think outside the box and address significant real-world challenges.' }
+        ]
+      },
+      {
+        type: '词义猜测',
+        text: 'In paragraph 7, the phrase “has paid off” most nearly means “_____”.',
+        options: [
+          'has produced positive results',
+          'has required larger payments',
+          'has brought the effort to an end',
+          'has removed all future difficulties'
+        ],
+        answer: 0,
+        explanation: '“has paid off”之后紧接着学生在国内外竞赛中表现出色的例子，说明培养创造力的努力“取得了成效”，选A。此处不是付钱；作者也没有说努力已经结束或所有困难已经消除。',
+        evidence: [{ ref: 'p7', label: '第33页 · 第7段', quote: 'The emphasis on developing creativity among Chinese college students has paid off. Students have excelled in national and international competitions, showcasing their innovative projects and research.' }]
+      },
+      {
+        type: '推理判断',
+        text: 'Which approach would the author most likely support for further improvement?',
+        options: [
+          'Judging creative work only by whether it succeeds immediately.',
+          'Keeping university projects separate from industry.',
+          'Supporting interdisciplinary cooperation and allowing students to learn from failure.',
+          'Reducing international exchanges to protect original ideas.'
+        ],
+        answer: 2,
+        explanation: '第9段建议拓展跨学科项目、加强校企合作，并建立鼓励冒险和接纳失败的教育体系。由此可推断，作者支持跨学科合作，并允许学生从失败中学习，选C。只看眼前成败、隔离产业合作或减少国际交流，都与该段建议不符。',
+        evidence: [
+          { ref: 'p9', label: '第34页 · 第9段', quote: 'To further enhance creativity among college students, it is essential to expand interdisciplinary programs, encourage partnerships between universities and industries, and increase investment in emerging fields such as artificial intelligence and biotechnology.' },
+          { ref: 'p9', label: '第34页 · 第9段', quote: 'A more flexible and open education system is also needed to encourage risk-taking and embrace failure.' }
+        ]
+      }
+    ];
+
+    const form = document.getElementById('quiz-form');
+    const container = document.getElementById('questions');
+    const questionNav = document.getElementById('question-nav');
+    const errorSummary = document.getElementById('error-summary');
+    const results = document.getElementById('results');
+    const submitButton = document.getElementById('submit-button');
+    const resetButton = document.getElementById('reset-button');
+    const submissionStatus = document.getElementById('submission-status');
+    let submitted = false;
+    let validationAttempted = false;
+    const letter = index => String.fromCharCode(65 + index);
+    const el = (tag, className, text) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    };
+
+    questions.forEach((question, index) => {
+      const fieldset = el('fieldset', 'question');
+      fieldset.id = `question-${index + 1}`;
+      const legend = el('legend');
+      const meta = el('span', 'question-meta');
+      meta.append(el('span', 'question-number', `QUESTION ${String(index + 1).padStart(2, '0')}`), el('span', 'question-kind', question.type));
+      const title = el('span', 'question-text', question.text);
+      title.lang = 'en';
+      legend.append(meta, title);
+      fieldset.append(legend);
+      const options = el('div', 'option-list');
+      question.options.forEach((option, optionIndex) => {
+        const label = el('label', 'option');
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = `q${index + 1}`;
+        input.value = String(optionIndex);
+        input.id = `q${index + 1}-${letter(optionIndex)}`;
+        const content = el('span', 'option-content');
+        content.lang = 'en';
+        content.append(el('span', 'option-letter', `${letter(optionIndex)}.`), document.createTextNode(option));
+        label.append(input, content);
+        options.append(label);
+      });
+      const error = el('p', 'question-error', '请为本题选择一个答案。');
+      error.id = `error-${index + 1}`;
+      error.hidden = true;
+      fieldset.append(error, options);
+      container.append(fieldset);
+      const navLink = el('a', '', String(index + 1).padStart(2, '0'));
+      navLink.href = `#question-${index + 1}`;
+      navLink.setAttribute('aria-label', `第${index + 1}题，未作答`);
+      questionNav.append(navLink);
+    });
+
+    const getAnswers = () => questions.map((_, index) => {
+      const checked = form.querySelector(`input[name="q${index + 1}"]:checked`);
+      return checked ? Number(checked.value) : null;
+    });
+
+    function setSubmissionStatus(state, message, target, linkText) {
+      submissionStatus.dataset.state = state;
+      submissionStatus.replaceChildren(document.createTextNode(message));
+      if (target) {
+        const link = el('a', '', linkText);
+        link.href = `#${target}`;
+        submissionStatus.append(link);
+      }
+      submissionStatus.hidden = !message;
+    }
+
+    function updateProgress() {
+      const answers = getAnswers();
+      const count = answers.filter(answer => answer !== null).length;
+      document.getElementById('progress-label').textContent = `已答 ${count} / ${questions.length} 题`;
+      document.querySelector('.progress-fill').style.width = `${count / questions.length * 100}%`;
+      document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', String(count));
+      answers.forEach((answer, index) => {
+        const navLink = questionNav.children[index];
+        navLink.classList.toggle('answered', answer !== null);
+        navLink.setAttribute('aria-label', `第${index + 1}题，${answer !== null ? '已作答' : '未作答'}`);
+      });
+    }
+
+    function showMissingAnswers(answers) {
+      const missing = [];
+      answers.forEach((answer, index) => {
+        const empty = answer === null;
+        const fieldset = document.getElementById(`question-${index + 1}`);
+        const error = document.getElementById(`error-${index + 1}`);
+        fieldset.classList.toggle('needs-answer', empty);
+        error.hidden = !empty;
+        fieldset.querySelectorAll('input').forEach(input => {
+          if (empty) {
+            input.setAttribute('aria-invalid', 'true');
+            input.setAttribute('aria-describedby', error.id);
+          } else {
+            input.removeAttribute('aria-invalid');
+            input.removeAttribute('aria-describedby');
+          }
+        });
+        if (empty) missing.push(index + 1);
+      });
+      errorSummary.hidden = missing.length === 0;
+      errorSummary.textContent = missing.length ? `还有 ${missing.length} 题未作答：第 ${missing.join('、')} 题。请补答后再次点击“提交答案”。` : '';
+      if (missing.length) {
+        const link = el('a', '', `前往第${missing[0]}题 ↑`);
+        link.href = `#question-${missing[0]}`;
+        errorSummary.append(link);
+        setSubmissionStatus('', '');
+      } else if (!submitted) {
+        setSubmissionStatus('ready', '已完成全部6题，请点击“提交答案”查看得分。');
+      }
+      return missing;
+    }
+
+    form.addEventListener('change', () => {
+      if (submitted) return;
+      updateProgress();
+      if (validationAttempted) showMissingAnswers(getAnswers());
+      else setSubmissionStatus('', '');
+    });
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (submitted) return;
+      const answers = getAnswers();
+      validationAttempted = true;
+      const missing = showMissingAnswers(answers);
+      if (missing.length) {
+        const firstMissing = document.getElementById(`question-${missing[0]}`);
+        firstMissing.querySelector('input').focus({ preventScroll:true });
+        firstMissing.scrollIntoView({ behavior:'instant', block:'start' });
+        return;
+      }
+
+      submitted = true;
+      const score = answers.reduce((total, answer, index) => total + Number(answer === questions[index].answer), 0);
+      const heading = el('h3', '', '本次练习得分');
+      heading.id = 'results-heading';
+      const scoreDisplay = el('div', 'score', String(score));
+      scoreDisplay.append(el('span', '', ` / ${questions.length}`));
+      results.replaceChildren(heading, scoreDisplay, el('p', '', `答对 ${score} 题，答错 ${questions.length - score} 题。每题1分。`), el('p', '', score === questions.length ? '全部答对！下方可对照解析，回到原文复核。' : '答案与解析已显示。对照原文，看看每个判断的依据。'));
+      results.append(el('p', '', `正确答案：${questions.map((question, index) => `${index + 1}.${letter(question.answer)}`).join(' · ')}`));
+      results.hidden = false;
+
+      questions.forEach((question, index) => {
+        const correct = answers[index] === question.answer;
+        const fieldset = document.getElementById(`question-${index + 1}`);
+        const labels = fieldset.querySelectorAll('.option');
+        labels[question.answer].classList.add('correct-option');
+        const correctBadge = el('span', 'answer-badge', correct ? '✓ 正确答案 · 你的选择' : '✓ 正确答案');
+        correctBadge.lang = 'zh-CN';
+        labels[question.answer].querySelector('.option-content').append(correctBadge);
+        if (!correct) {
+          labels[answers[index]].classList.add('wrong-option');
+          const wrongBadge = el('span', 'answer-badge', '× 你的选择');
+          wrongBadge.lang = 'zh-CN';
+          labels[answers[index]].querySelector('.option-content').append(wrongBadge);
+        }
+        fieldset.querySelectorAll('input').forEach(input => { input.disabled = true; });
+        const feedback = el('div', 'feedback');
+        feedback.append(el('h3', correct ? '' : 'incorrect', `${correct ? '✓ 回答正确' : '× 回答错误'} · 正确答案 ${letter(question.answer)} · 你的答案 ${letter(answers[index])}`));
+        feedback.append(el('p', '', `中文解析：${question.explanation}`));
+        feedback.append(el('p', '', '原文依据：'));
+        question.evidence.forEach(evidence => {
+          const quote = el('blockquote', '', `“${evidence.quote}”`);
+          quote.lang = 'en';
+          const link = el('a', '', `↗ ${evidence.label} · 返回原文`);
+          link.href = `#${evidence.ref}`;
+          feedback.append(quote, link);
+        });
+        fieldset.append(feedback);
+        const navLink = questionNav.children[index];
+        navLink.classList.toggle('nav-wrong', !correct);
+        navLink.setAttribute('aria-label', `第${index + 1}题，${correct ? '回答正确' : '回答错误'}`);
+      });
+      submitButton.disabled = true;
+      submitButton.textContent = '已提交';
+      setSubmissionStatus('success', `提交成功！总分 ${score} / ${questions.length} 分。正确答案、中文解析和原文依据已显示。`, 'results', '查看得分与解析 ↑');
+      results.focus({ preventScroll:true });
+      results.scrollIntoView({ behavior:'instant', block:'center' });
+    });
+
+    resetButton.addEventListener('click', () => {
+      form.reset();
+      submitted = false;
+      validationAttempted = false;
+      results.hidden = true;
+      results.replaceChildren();
+      errorSummary.hidden = true;
+      errorSummary.textContent = '';
+      form.querySelectorAll('input').forEach(input => {
+        input.disabled = false;
+        input.removeAttribute('aria-invalid');
+        input.removeAttribute('aria-describedby');
+      });
+      container.querySelectorAll('.feedback,.answer-badge').forEach(node => node.remove());
+      container.querySelectorAll('.option').forEach(node => node.classList.remove('correct-option', 'wrong-option'));
+      container.querySelectorAll('.question').forEach(node => node.classList.remove('needs-answer'));
+      container.querySelectorAll('.question-error').forEach(node => { node.hidden = true; });
+      [...questionNav.children].forEach(node => node.classList.remove('nav-wrong'));
+      submitButton.disabled = false;
+      submitButton.replaceChildren(document.createTextNode('提交答案 '));
+      const arrow = el('span', '', '→');
+      arrow.setAttribute('aria-hidden', 'true');
+      submitButton.append(arrow);
+      updateProgress();
+      setSubmissionStatus('reset', '已清空本次答案和得分，可以重新练习。');
+      const heading = document.getElementById('practice-heading');
+      heading.focus({ preventScroll:true });
+      heading.scrollIntoView({ behavior:'instant', block:'start' });
+    });
+
+    // Do not restore previous radio selections when a browser restores this page.
+    // Responses and results exist only in this page's memory.
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) return;
+      form.reset();
+      updateProgress();
+    });
+
+    // Enable actions only after all questions and event handlers are ready.
+    document.getElementById('runtime-notice').hidden = true;
+    submitButton.disabled = false;
+    resetButton.disabled = false;
+  </script>
+</body>
+</html>
