@@ -1,0 +1,15 @@
+{
+  "name": "english-reading",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A self-contained English reading exercise for first-year university students.",
+  "scripts": {
+    "test": "node --test tests/reading-practice.test.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
