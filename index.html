@@ -35,13 +35,6 @@
     h1 { margin:0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(32px,3.7vw,53px); line-height:1.12; font-weight:500; letter-spacing:-.035em; }
     h1 span { display:block; }
     .hero-description { color:var(--muted); font-size:14px; margin:18px 0 0; }
-    .hero-meta { text-align:right; flex-shrink:0; padding-bottom:3px; }
-    .hero-meta strong { font-family:Georgia,serif; font-size:35px; font-weight:400; line-height:1; }
-    .hero-meta span { display:block; font-size:12px; color:var(--muted); margin-top:7px; }
-    .source-note { display:flex; gap:13px; align-items:flex-start; padding:16px 20px; background:#efeee5; border:1px solid #e3e0d0; border-radius:12px; font-size:12px; color:#65614f; margin-bottom:28px; }
-    .source-note svg { flex-shrink:0; margin-top:3px; }
-    .source-note p { margin:0; }
-    .source-note strong { color:#575342; }
     .workspace { display:grid; grid-template-columns:minmax(0,1.22fr) minmax(0,1fr); gap:28px; align-items:start; }
     .reading,.exercise { background:var(--white); border:1px solid var(--line); border-radius:var(--radius); }
     .panel-heading { padding:24px 30px 20px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; align-items:center; }
@@ -159,8 +152,6 @@
       h1 { font-size:clamp(29px,6.6vw,43px); }
       .hero-description { font-size:12px; line-height:1.8; margin-top:14px; }
       .eyebrow { font-size:9px; letter-spacing:.13em; margin-bottom:12px; }
-      .hero-meta { display:none; }
-      .source-note { margin-bottom:20px; padding:13px 14px; font-size:11px; gap:9px; }
       .workspace { display:block; }
       .reading,.exercise { border-radius:13px; }
       .exercise { margin-top:24px; position:static; max-height:none; overflow:visible; }
@@ -184,7 +175,7 @@
     }
     @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .progress-fill { transition:none; } }
     @media print {
-      .site-header,.top-nav,.source-note,.hero-meta,.quiz-actions,.page-navigation,.question-nav,.site-footer { display:none; }
+      .site-header,.top-nav,.quiz-actions,.page-navigation,.question-nav,.site-footer { display:none; }
       body { background:white; color:black; }
       main { padding:0; }
       .hero { padding:0 0 20px; }
@@ -211,12 +202,7 @@
         <h1 id="page-heading" lang="en">Planting seeds,<span>harvesting the future</span></h1>
         <p class="hero-description">从大学生的创造力，读懂创新的力量。<br>大学一年级 · 阅读理解 · 提交后查看中文解析与原文依据</p>
       </div>
-      <div class="hero-meta"><strong>03 <span style="display:inline;font-size:18px">/</span> 06</strong><span>3 页课文 &nbsp; · &nbsp; 6 道单选题</span></div>
     </section>
-    <aside class="source-note" aria-label="照片识别与标题说明">
-      <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>
-      <p><strong>照片核对说明</strong> · 两张照片覆盖第32–34页，已按页码整理全部可见正文（第1–10段）、图片说明及 Notes；第5段跨页续接。照片未显示独立文章标题，本页英文阅读标题取自第33页页脚，保留页眉“Understanding China”。放大核对后正文均可辨认，未补写照片外内容。</p>
-    </aside>
     <div class="workspace">
       <article class="reading" id="reading" aria-labelledby="reading-heading">
         <div class="panel-heading"><h2 id="reading-heading"><span class="section-label">01 / THE PASSAGE</span>阅读原文</h2><span class="tag">保留原文段落</span></div>
