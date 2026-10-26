@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="description" content="根据课文照片整理的大学英语阅读练习：阅读原文，完成六道选择题，提交后查看中文解析与原文依据。">
+  <meta name="description" content="大学英语阅读练习：完成十道阅读、四/六级词汇和文章结构选择题，提交后查看中文解析与原文依据。">
   <title>Planting seeds, harvesting the future · 英语阅读练习</title>
   <style>
     :root { --paper:#f5f4ef; --white:#fffefa; --ink:#24352f; --muted:#65716b; --green:#25634f; --light-green:#edf4ee; --line:#dedfd6; --red:#a33333; --light-red:#fff0ed; --gold:#8c6426; --radius:18px; }
@@ -68,7 +68,7 @@
     #progress-label { font-weight:600; color:var(--ink); }
     .progress-track { height:4px; background:#e9ece3; border-radius:5px; margin:9px 0 15px; overflow:hidden; }
     .progress-fill { height:100%; width:0; background:var(--green); transition:width .2s ease; }
-    .question-nav { display:flex; gap:8px; margin-bottom:18px; }
+    .question-nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
     .question-nav a { width:31px; height:31px; border-radius:50%; border:1px solid var(--line); font-size:11px; text-decoration:none; display:grid; place-items:center; background:white; color:var(--muted); }
     .question-nav a.answered { background:var(--green); color:white; border-color:var(--green); }
     .question-nav a.nav-wrong { background:var(--red); border-color:var(--red); }
@@ -239,12 +239,12 @@
         </div>
       </article>
       <section class="exercise" id="practice" aria-labelledby="practice-heading">
-        <div class="panel-heading"><h2 id="practice-heading" tabindex="-1"><span class="section-label">02 / CHECK YOUR UNDERSTANDING</span>阅读练习</h2><span class="tag">6 题 · 每题1分</span></div>
+        <div class="panel-heading"><h2 id="practice-heading" tabindex="-1"><span class="section-label">02 / CHECK YOUR UNDERSTANDING</span>阅读练习</h2><span class="tag">10 题 · 每题1分</span></div>
         <div class="quiz-intro">
           <p>阅读文章，为每题选择一个最佳答案。全部作答后提交，即可查看得分、中文解析及原文依据。</p>
           <p class="runtime-notice" id="runtime-notice" role="status">答题功能正在加载。如果此提示一直显示，请下载本页并用浏览器打开；静态文件预览可能不支持 JavaScript。</p>
-          <div class="progress-header"><span>作答进度</span><span id="progress-label" aria-live="polite">已答 0 / 6 题</span></div>
-          <div class="progress-track" role="progressbar" aria-label="作答进度" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="progress-fill"></div></div>
+          <div class="progress-header"><span>作答进度</span><span id="progress-label" aria-live="polite">已答 0 / 10 题</span></div>
+          <div class="progress-track" role="progressbar" aria-label="作答进度" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div class="progress-fill"></div></div>
           <nav class="question-nav" id="question-nav" aria-label="题目导航"></nav>
         </div>
         <div class="results" id="results" tabindex="-1" aria-labelledby="results-heading" hidden></div>
@@ -350,6 +350,64 @@
         evidence: [
           { ref: 'p9', label: '第34页 · 第9段', quote: 'To further enhance creativity among college students, it is essential to expand interdisciplinary programs, encourage partnerships between universities and industries, and increase investment in emerging fields such as artificial intelligence and biotechnology.' },
           { ref: 'p9', label: '第34页 · 第9段', quote: 'A more flexible and open education system is also needed to encourage risk-taking and embrace failure.' }
+        ]
+      },
+      {
+        type: '四/六级词汇',
+        text: 'In paragraph 5, the word “foster” in “foster a creative environment” most nearly means “_____”.',
+        options: [
+          'strictly measure',
+          'encourage the development of',
+          'publicly announce',
+          'completely replace'
+        ],
+        answer: 1,
+        explanation: 'foster 是四、六级阅读中值得积累的动词，表示“促进、培养、助长”。本句说政府推出政策、项目与活动，目的是营造有利于创造的环境，因此B“促进……的发展”最符合语境。常见搭配有 foster creativity（培养创造力）、foster innovation（促进创新）。A“严格衡量”、C“公开宣布”和D“完全取代”均不符合此处含义。',
+        evidence: [{ ref: 'p5', label: '第32页 · 第5段', quote: 'In fact, the Chinese government has rolled out policies, programs, and activities to foster a creative environment.' }]
+      },
+      {
+        type: '四/六级词汇',
+        text: 'In paragraph 3, what does the phrase “tackle complex problems” mean?',
+        options: [
+          'Put off dealing with difficult problems.',
+          'Describe difficult problems without taking action.',
+          'Try to deal with difficult problems.',
+          'Prove that difficult problems do not exist.'
+        ],
+        answer: 2,
+        explanation: 'tackle 在这里表示“着手处理、应对”，后面常接 problem、challenge、difficulty 等名词。研究中心让师生有机会运用创造性方法应对复杂问题，所以选C。tackle 强调采取行动处理问题，不保证已经解决；A“推迟处理”、B“只描述而不行动”和D“证明问题不存在”都不符合原意。',
+        evidence: [{ ref: 'p3', label: '第32页 · 第3段', quote: 'Interdisciplinary research centers have been set up to give students and faculty alike the chance to tackle complex problems with creative solutions.' }]
+      },
+      {
+        type: '四/六级词组',
+        text: 'In paragraph 4, “in light of” could best be replaced by “_____”.',
+        options: [
+          'in spite of',
+          'at the expense of',
+          'in contrast to',
+          'in view of'
+        ],
+        answer: 3,
+        explanation: 'in light of 意为“鉴于、考虑到”，与 in view of 意思相近，因此选D。原文说明，考虑到中国经济的快速增长和科技进步，培养大学生创造力成为国家重点。这个词组后面通常接名词或名词短语。A表示“尽管”，B表示“以……为代价”，C表示“与……形成对比”，均不符合这里的逻辑关系。',
+        evidence: [{ ref: 'p4', label: '第32页 · 第4段', quote: 'Since creativity is the lifeblood of any innovation or invention, cultivating creativity among college students has become a national priority in light of China’s rapid economic growth and technological advancement.' }]
+      },
+      {
+        type: '文章结构',
+        text: 'Which outline best describes the organization of the passage?',
+        options: [
+          'University examples and their significance → policies and activities → achievements → suggestions and conclusion.',
+          'A scientific theory → an experiment → a new invention → its technical limitations.',
+          'An old education system → a replacement system → reasons to abandon all earlier practices.',
+          'An international problem → opposing views from different countries → a single solution.'
+        ],
+        answer: 0,
+        explanation: '文章按“高校实例及意义—政策与活动—成果—建议与总结”展开，选A。第1–3段介绍清华、浙大和中科大的做法，第4段点明培养创造力的重要性；第5–6段介绍政策与“挑战杯”等活动；第7–8段展示竞赛和科研成果；第9段提出改进建议，第10段总结。文章没有介绍实验步骤、全面否定过去的教育方式，也没有比较不同国家的对立观点。',
+        evidence: [
+          { ref: 'p4', label: '第32页 · 第4段：概括高校实例的意义', quote: 'These examples highlight the fact that Chinese higher education institutions have heavily invested in fostering creativity and innovation in education.' },
+          { ref: 'p5', label: '第32页 · 第5段：转入政策与活动', quote: 'In fact, the Chinese government has rolled out policies, programs, and activities to foster a creative environment.' },
+          { ref: 'p7', label: '第33页 · 第7段：展示成果', quote: 'Students have excelled in national and international competitions, showcasing their innovative projects and research.' },
+          { ref: 'p9', label: '第34页 · 第9段：提出改进建议', quote: 'While substantial progress has been made, there is always room for improvement.' },
+          { ref: 'p10', label: '第34页 · 第10段：总结', quote: 'Developing creativity among Chinese college students is a multifaceted endeavor that requires ongoing commitment and collaboration.' }
         ]
       }
     ];
@@ -463,7 +521,7 @@
         errorSummary.append(link);
         setSubmissionStatus('', '');
       } else if (!submitted) {
-        setSubmissionStatus('ready', '已完成全部6题，请点击“提交答案”查看得分。');
+        setSubmissionStatus('ready', `已完成全部${questions.length}题，请点击“提交答案”查看得分。`);
       }
       return missing;
     }

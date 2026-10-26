@@ -10,8 +10,10 @@ const { chromium } = require('playwright');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'));
 const choices = ['A', 'B', 'C', 'D'];
-const allCorrect = [1, 0, 3, 2, 0, 2];
-const partlyWrong = [1, 1, 3, 0, 0, 0];
+const allCorrect = [1, 0, 3, 2, 0, 2, 1, 2, 3, 0];
+const partlyWrong = [1, 1, 3, 0, 0, 0, 1, 0, 3, 1];
+const totalQuestions = 10;
+const partlyCorrect = 5;
 
 async function selectAnswers(page, answers) {
   for (let i = 0; i < answers.length; i++) {
@@ -45,7 +47,7 @@ async function assertReset(page) {
   assert.equal(await page.locator('#error-summary').isVisible(), false);
   assert.equal(await page.locator('.question-error:visible').count(), 0);
   assert.equal(await page.locator('#submit-button').isEnabled(), true);
-  assert.equal(await page.locator('#progress-label').textContent(), '已答 0 / 6 题');
+  assert.equal(await page.locator('#progress-label').textContent(), `已答 0 / ${totalQuestions} 题`);
   assert.match(await page.locator('#submission-status').textContent(), /已清空/);
 }
 
@@ -65,7 +67,7 @@ test('Submission feedback and reset work on desktop and mobile', async t => {
       args: ['--no-sandbox']
     });
     for (const viewport of [{ width: 1440, height: 1080 }, { width: 390, height: 844 }, { width: 320, height: 720 }]) {
-      await t.test(`${viewport.width}px: missing answers, 6/6, 3/6, and reset`, async () => {
+      await t.test(`${viewport.width}px: missing answers, 10/10, 5/10, and reset`, async () => {
         const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
         try {
           const page = await context.newPage();
@@ -76,20 +78,37 @@ test('Submission feedback and reset work on desktop and mobile', async t => {
           await page.goto(url);
           assert.equal(await page.locator('#runtime-notice').isVisible(), false);
           assert.equal(await page.locator('#submit-button').isEnabled(), true);
-          assert.equal(await page.locator('.question').count(), 6);
-          assert.equal(await page.locator('input[type=radio]').count(), 24);
+          assert.equal(await page.locator('.question').count(), totalQuestions);
+          assert.equal(await page.locator('input[type=radio]').count(), totalQuestions * 4);
+          assert.equal(await page.locator('.question-nav a').count(), totalQuestions);
+          assert.equal(await page.locator('[role=progressbar]').getAttribute('aria-valuemax'), String(totalQuestions));
+          assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+          for (const number of [7, 8, 9]) {
+            assert.match(await page.locator(`#question-${number} .question-kind`).textContent(), /四\/六级/);
+          }
+          assert.equal(await page.locator('#question-10 .question-kind').textContent(), '文章结构');
           assert.equal(await page.locator('.feedback,.answer-badge').count(), 0);
 
-          // Regression: the original error was far above the visible question.
-          await selectAnswers(page, [1, 0, 3, 2, 0, null]);
+          // The four new questions must be completed before scoring is possible.
+          await selectAnswers(page, allCorrect.slice(0, 6));
           await page.locator('#submit-button').click();
-          assert.match(await page.locator('#error-summary').textContent(), /还有 1 题未作答：第 6 题/);
-          assert.equal(await page.locator(':focus').getAttribute('id'), 'q6-A');
+          assert.match(await page.locator('#error-summary').textContent(), /还有 4 题未作答：第 7、8、9、10 题/);
+          assert.equal(await page.locator(':focus').getAttribute('id'), 'q7-A');
+          assert.equal(await page.locator('#progress-label').textContent(), '已答 6 / 10 题');
+          assert.equal(await page.locator('#results').isVisible(), false);
+          assert.equal(await page.locator('.feedback,.answer-badge').count(), 0);
+          await assertButtonFeedbackVisible(page, '#error-summary');
+
+          // Regression: the original error was far above the visible question.
+          await selectAnswers(page, allCorrect.map((answer, index) => index === totalQuestions - 1 ? null : answer));
+          await page.locator('#submit-button').click();
+          assert.match(await page.locator('#error-summary').textContent(), /还有 1 题未作答：第 10 题/);
+          assert.equal(await page.locator(':focus').getAttribute('id'), 'q10-A');
           assert.equal(await page.locator('.question-error:visible').count(), 1);
           assert.equal(await page.locator('#results').isVisible(), false);
           assert.equal(await page.locator('.feedback,.answer-badge').count(), 0);
           await assertButtonFeedbackVisible(page, '#error-summary');
-          const firstMissingVisible = await page.locator('#question-6 legend').evaluate(node => {
+          const firstMissingVisible = await page.locator('#question-10 legend').evaluate(node => {
             const rect = node.getBoundingClientRect();
             const footer = document.querySelector('.quiz-actions').getBoundingClientRect();
             return rect.top >= document.querySelector('.site-header').getBoundingClientRect().bottom && rect.bottom < footer.top;
@@ -97,17 +116,17 @@ test('Submission feedback and reset work on desktop and mobile', async t => {
           assert.equal(firstMissingVisible, true);
 
           // Filling the missing response allows this exact attempt to submit.
-          await page.locator('#q6-C').check();
+          await page.locator('#q10-A').check();
           assert.equal(await page.locator('#error-summary').isVisible(), false);
           await page.locator('#submit-button').click();
-          assert.equal((await page.locator('.score').textContent()).trim(), '6 / 6');
-          assert.match(await page.locator('#submission-status').textContent(), /提交成功！总分 6 \/ 6/);
+          assert.equal((await page.locator('.score').textContent()).trim(), '10 / 10');
+          assert.match(await page.locator('#submission-status').textContent(), /提交成功！总分 10 \/ 10/);
           await assertButtonFeedbackVisible(page, '#submission-status');
-          assert.equal(await page.locator('.feedback').count(), 6);
-          assert.equal(await page.locator('.correct-option').count(), 6);
+          assert.equal(await page.locator('.feedback').count(), totalQuestions);
+          assert.equal(await page.locator('.correct-option').count(), totalQuestions);
           assert.equal(await page.locator('.wrong-option').count(), 0);
-          assert.equal(await page.locator('input:disabled').count(), 24);
-          assert.match(await page.locator('#results').textContent(), /正确答案：1.B · 2.A · 3.D · 4.C · 5.A · 6.C/);
+          assert.equal(await page.locator('input:disabled').count(), totalQuestions * 4);
+          assert.match(await page.locator('#results').textContent(), /正确答案：1.B · 2.A · 3.D · 4.C · 5.A · 6.C · 7.B · 8.C · 9.D · 10.A/);
           for (const feedback of await page.locator('.feedback').allTextContents()) {
             assert.match(feedback, /中文解析：/);
             assert.match(feedback, /原文依据：/);
@@ -121,21 +140,21 @@ test('Submission feedback and reset work on desktop and mobile', async t => {
           await assertReset(page);
           await selectAnswers(page, partlyWrong);
           await page.locator('#submit-button').click();
-          assert.equal((await page.locator('.score').textContent()).trim(), '3 / 6');
-          assert.equal(await page.locator('.wrong-option').count(), 3);
-          assert.equal(await page.locator('.feedback').count(), 6);
+          assert.equal((await page.locator('.score').textContent()).trim(), `${partlyCorrect} / ${totalQuestions}`);
+          assert.equal(await page.locator('.wrong-option').count(), totalQuestions - partlyCorrect);
+          assert.equal(await page.locator('.feedback').count(), totalQuestions);
           await assertButtonFeedbackVisible(page, '#submission-status');
 
           await assertReset(page);
           await selectAnswers(page, allCorrect);
           await page.locator('#submit-button').click();
-          assert.equal((await page.locator('.score').textContent()).trim(), '6 / 6');
-          assert.equal(await page.locator('.feedback').count(), 6, 'Repeated attempts must not duplicate explanations');
+          assert.equal((await page.locator('.score').textContent()).trim(), '10 / 10');
+          assert.equal(await page.locator('.feedback').count(), totalQuestions, 'Repeated attempts must not duplicate explanations');
           await assertReset(page);
 
           // An empty attempt also displays an actionable notice at the button.
           await page.locator('#submit-button').click();
-          assert.match(await page.locator('#error-summary').textContent(), /还有 6 题未作答/);
+          assert.match(await page.locator('#error-summary').textContent(), /还有 10 题未作答/);
           assert.equal(await page.locator(':focus').getAttribute('id'), 'q1-A');
           await assertButtonFeedbackVisible(page, '#error-summary');
           await assertReset(page);
