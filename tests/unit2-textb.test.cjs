@@ -37,11 +37,16 @@ async function reset(page) {
   assert.equal(await page.locator('#submit-button').isEnabled(),true);
   assert.equal(await page.locator('#worksheet').evaluate(form=>[...form.querySelectorAll('select,input[type=text],textarea')].every(input=>input.value==='')),true);
 }
-test('Text B: the document-based 36-point worksheet',async t=>{
-  const html=fs.readFileSync(path.join(__dirname,'..','unit2-textb.html'));
+test('Text B editions keep identical exercises and grading logic',()=>{
+  const app=filename=>fs.readFileSync(path.join(__dirname,'..',filename),'utf8').match(/<script>([\s\S]*?)<\/script>/)[1];
+  assert.ok(app('unit2-textb.html')===app('unit2-textb-adventure.html'),'All question data, answers, explanations and grading logic must remain identical');
+});
+for(const edition of ['unit2-textb.html','unit2-textb-adventure.html']) {
+test(`Text B: ${edition}`,async t=>{
+  const html=fs.readFileSync(path.join(__dirname,'..',edition));
   const server=http.createServer((request,response)=>{response.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});response.end(html);});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  const url=`http://127.0.0.1:${server.address().port}/unit2-textb.html`;
+  const url=`http://127.0.0.1:${server.address().port}/${edition}`;
   let browser;
   try {
     browser=await chromium.launch({...(fs.existsSync('/usr/bin/chromium')?{executablePath:'/usr/bin/chromium'}:{}),headless:true,args:['--no-sandbox']});
@@ -53,6 +58,12 @@ test('Text B: the document-based 36-point worksheet',async t=>{
           page.on('pageerror',error=>errors.push(error.message));
           page.on('request',request=>requests.push({url:request.url(),method:request.method()}));
           await page.goto(url);
+          if(edition==='unit2-textb-adventure.html') {
+            await page.locator('.adventure-hero-image').evaluate(image=>image.decode());
+            assert.equal(await page.locator('.adventure-hero-image').evaluate(image=>{
+              return Math.abs(image.clientWidth/image.clientHeight-image.naturalWidth/image.naturalHeight)<0.01;
+            }),true,'The landscape illustration must preserve its natural proportions');
+          }
           assert.equal(await page.locator('#runtime-notice').isVisible(),false);
           assert.equal(await page.locator('.question').count(),36);
           assert.deepEqual(await page.locator('.case-card:not(.bonus) .case-points').allTextContents(),['8分','10分','7分','5分','6分']);
@@ -135,3 +146,4 @@ test('Text B: the document-based 36-point worksheet',async t=>{
     await new Promise(resolve=>server.close(resolve));
   }
 });
+}

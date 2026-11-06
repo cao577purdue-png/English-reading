@@ -50,7 +50,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html unit2-textb.html _site/
+          cp index.html unit2-textb.html unit2-textb-adventure.html _site/
           touch _site/.nojekyll
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
@@ -66,7 +66,7 @@ jobs:
           python3 - <<'PY'
           import os, pathlib, time, urllib.request
           base = os.environ['PAGES_URL'].rstrip('/') + '/'
-          for filename in ['index.html', 'unit2-textb.html']:
+          for filename in ['index.html', 'unit2-textb.html', 'unit2-textb-adventure.html']:
               expected = (pathlib.Path('_site') / filename).read_bytes()
               url = base + filename + '?v=' + os.environ['GITHUB_SHA']
               for attempt in range(6):
