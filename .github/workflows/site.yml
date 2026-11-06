@@ -50,7 +50,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html _site/index.html
+          cp index.html unit2-textb.html _site/
           touch _site/.nojekyll
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
@@ -59,3 +59,28 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+      - name: Verify published worksheets
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, time, urllib.request
+          base = os.environ['PAGES_URL'].rstrip('/') + '/'
+          for filename in ['index.html', 'unit2-textb.html']:
+              expected = (pathlib.Path('_site') / filename).read_bytes()
+              url = base + filename + '?v=' + os.environ['GITHUB_SHA']
+              for attempt in range(6):
+                  try:
+                      request = urllib.request.Request(url, headers={'Cache-Control': 'no-cache'})
+                      with urllib.request.urlopen(request, timeout=20) as response:
+                          actual = response.read()
+                          assert response.status == 200
+                      assert actual == expected, 'Published content does not match this deployment'
+                      print(f'Verified public {filename}: HTTP 200; content matches deployed source')
+                      break
+                  except Exception as error:
+                      if attempt == 5:
+                          raise
+                      print(f'{filename}: waiting for Pages propagation ({type(error).__name__})')
+                      time.sleep(10)
+          PY

@@ -4,7 +4,7 @@
   "private": true,
   "description": "A self-contained English reading exercise for first-year university students.",
   "scripts": {
-    "test": "node --test tests/reading-practice.test.cjs"
+    "test": "node --test"
   },
   "engines": {
     "node": ">=22"
